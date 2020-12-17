@@ -97,6 +97,8 @@ class _HomePageWidgetState extends State<HomePageWidget>
               _searchTerm = null;
             });
 
+            FocusScope.of(context).unfocus();
+
             _onWidgetLoaded();
           },
           child: Icon(
