@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:project_example/constants/app_colors.dart';
+import 'package:project_example/model/planet.dart';
+import 'package:project_example/repository/planets_repository.dart';
 import 'package:project_example/widgets/custom_bottom_navigation_bar.dart';
+import 'package:project_example/widgets/search_input_widget.dart';
 
 class HomePageWidget extends StatefulWidget {
   @override
@@ -9,6 +12,9 @@ class HomePageWidget extends StatefulWidget {
 
 class _HomePageWidgetState extends State<HomePageWidget>
     with WidgetsBindingObserver {
+  final PlanetsRepository _planetsRepository = PlanetsRepository();
+  List<Planet> _planetList = [];
+  final TextEditingController _searchController = TextEditingController();
   final PageController _pageController = PageController();
 
   @override
@@ -22,13 +28,17 @@ class _HomePageWidgetState extends State<HomePageWidget>
   }
 
   void _onWidgetLoaded() async {
+    final planetList = await _planetsRepository.getAllPlanets();
 
+    setState(() {
+      _planetList = planetList;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomPadding: true,
       body: Stack(
         children: [
           _buildBackground(),
@@ -77,11 +87,13 @@ class _HomePageWidgetState extends State<HomePageWidget>
         ),
         InkWell(
           onTap: () {
-            //TODO: reset search input text
+            _searchController.text = "";
 
-            //TODO: reset planet data and term serached
+            setState(() {
+              _planetList = [];
+            });
 
-            //TODO: refresh the data
+            _onWidgetLoaded();
           },
           child: Icon(
             Icons.refresh,
@@ -104,8 +116,39 @@ class _HomePageWidgetState extends State<HomePageWidget>
   }
 
   Widget _buildSearchBar() {
-    //TODO: build a stateless search input widget
-    return Container();
+    return SearchInputWidget(
+      textController: _searchController,
+      onTextChanged: (value) {
+        //TODO: filter planet items using repository
+      },
+    );
+  }
+
+  Widget _buildPlanetList() {
+    //TODO: adding a circular progress when the user is loading the data
+    if (_planetList.isEmpty) {
+      return Container();
+    }
+
+    //TODO: create a widget which includes the planet name, image and description
+    //TODO: extra! removing "glow" from ListView using the ScrollConfiguration widget
+    return Expanded(
+      child: ListView.builder(
+        padding: const EdgeInsets.only(top: 16),
+        itemBuilder: (context, index) => _buildPlanetItem(context, index),
+        itemCount: _planetList.length,
+        shrinkWrap: true,
+      ),
+    );
+  }
+
+  Widget _buildPlanetItem(BuildContext context, int index) {
+    final planet = _planetList[index];
+
+    return Text(
+      "${planet.name}",
+      style: TextStyle(color: Colors.white, fontSize: 18),
+    );
   }
 
   _buildPlanetListWidget() {
@@ -124,8 +167,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
             _buildTitle(),
             SizedBox(height: 16),
             _buildSearchBar(),
-
-            //TODO: create method for building list
+            _buildPlanetList()
           ],
         ),
       ),
