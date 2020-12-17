@@ -3,6 +3,7 @@ import 'package:project_example/constants/app_colors.dart';
 import 'package:project_example/model/planet.dart';
 import 'package:project_example/repository/planets_repository.dart';
 import 'package:project_example/widgets/custom_bottom_navigation_bar.dart';
+import 'package:project_example/widgets/planet_card_widget.dart';
 import 'package:project_example/widgets/search_input_widget.dart';
 
 class HomePageWidget extends StatefulWidget {
@@ -14,6 +15,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
     with WidgetsBindingObserver {
   final PlanetsRepository _planetsRepository = PlanetsRepository();
   List<Planet> _planetList = [];
+  String _searchTerm;
   final TextEditingController _searchController = TextEditingController();
   final PageController _pageController = PageController();
 
@@ -91,6 +93,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
 
             setState(() {
               _planetList = [];
+              _searchTerm = null;
             });
 
             _onWidgetLoaded();
@@ -119,25 +122,45 @@ class _HomePageWidgetState extends State<HomePageWidget>
     return SearchInputWidget(
       textController: _searchController,
       onTextChanged: (value) {
-        //TODO: filter planet items using repository
+        final filterPlanets = _planetsRepository.getPlanetsByName(value);
+        setState(() {
+          _searchTerm = value;
+          _planetList = filterPlanets;
+        });
       },
     );
   }
 
   Widget _buildPlanetList() {
-    //TODO: adding a circular progress when the user is loading the data
     if (_planetList.isEmpty) {
-      return Container();
+      final isUserSearching = _searchTerm != null && _searchTerm.isNotEmpty;
+
+      return Expanded(
+        child: Center(
+          child: isUserSearching
+              ? Text(
+            'No data found for "$_searchTerm"',
+            style: TextStyle(
+                color: AppColors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.w400),
+          )
+              : CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.grey),
+          ),
+        ),
+      );
     }
 
-    //TODO: create a widget which includes the planet name, image and description
-    //TODO: extra! removing "glow" from ListView using the ScrollConfiguration widget
-    return Expanded(
-      child: ListView.builder(
-        padding: const EdgeInsets.only(top: 16),
-        itemBuilder: (context, index) => _buildPlanetItem(context, index),
-        itemCount: _planetList.length,
-        shrinkWrap: true,
+    return ScrollConfiguration(
+      behavior: RemoveGlowBehavior(),
+      child: Expanded(
+        child: ListView.builder(
+          padding: const EdgeInsets.only(top: 16),
+          itemBuilder: (context, index) => _buildPlanetItem(context, index),
+          itemCount: _planetList.length,
+          shrinkWrap: true,
+        ),
       ),
     );
   }
@@ -145,9 +168,8 @@ class _HomePageWidgetState extends State<HomePageWidget>
   Widget _buildPlanetItem(BuildContext context, int index) {
     final planet = _planetList[index];
 
-    return Text(
-      "${planet.name}",
-      style: TextStyle(color: Colors.white, fontSize: 18),
+    return PlanetCardWidget(
+      planet: planet,
     );
   }
 
@@ -185,5 +207,13 @@ class _HomePageWidgetState extends State<HomePageWidget>
         ),
       ),
     );
+  }
+}
+
+class RemoveGlowBehavior extends ScrollBehavior {
+  @override
+  Widget buildViewportChrome(
+      BuildContext context, Widget child, AxisDirection axisDirection) {
+    return child;
   }
 }
