@@ -1,9 +1,15 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:project_example/planets_app.dart';
+
 void main() async {
-  //TODO: insert WidgetsFlutterBinding.ensureInitialized()
-
-  //TODO: initialize preferred orientations with SystemChrome.setPreferredOrientations(orientations)
-
-  //TODO: set style for system overlay
-
-  //TODO: add runApp(YouAppWidget)
+  WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.white
+  ));
+  runApp(PlanetsApp());
 }
