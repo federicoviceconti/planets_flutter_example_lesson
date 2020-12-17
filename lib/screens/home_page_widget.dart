@@ -40,7 +40,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: true,
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           _buildBackground(),
@@ -71,6 +71,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
 
   Widget _buildBodyPage() {
     return PageView(
+      physics: NeverScrollableScrollPhysics(),
       controller: _pageController,
       children: [
         _buildPlanetListWidget(),
