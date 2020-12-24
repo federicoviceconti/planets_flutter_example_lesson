@@ -1,15 +1,16 @@
 # planets_flutter_example_lesson
 
-Example made during Flutter lesson
+Example made during Flutter lesson. You can find all the instruction for building this app on the subbranches: lesson/num_lesson.
+All the final code is into master.
 
 ## Getting Started
 
 This project is based on this Dribble UI: https://dribbble.com/shots/14772039-Solar-System-App-1
 
-After this lesson you should be able:
+After this lesson you should be able to:
 - understand the difference between stateful/stateless
 - create a simple widget
-- importing assets and libraries into pubspec.yaml
+- importing assets and packages into pubspec.yaml
 
 Widgets used:
 - Container
