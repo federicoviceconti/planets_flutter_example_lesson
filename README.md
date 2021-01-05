@@ -35,10 +35,13 @@ Package:
 **Final result:**
 
 Page loaded:
+
 <img src="https://github.com/federicoviceconti/planets_flutter_example_lesson/blob/master/ui/1_planets.png" alt="mockup home page 1" width="200">
 
 Loading page:
+
 <img src="https://github.com/federicoviceconti/planets_flutter_example_lesson/blob/master/ui/2_loading.png" alt="mockup loading page 1" width="200">
 
 No data:
+
 <img src="https://github.com/federicoviceconti/planets_flutter_example_lesson/blob/master/ui/3_no_data.png" alt="mockup no data page 1" width="200">
