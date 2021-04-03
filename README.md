@@ -18,7 +18,7 @@ Widgets used: Container, Text, Image, BottomNavigationBar, TextField, Icon, Stac
 
 Package: svg_helper
 
-**Final result:**
+## Final result
 
 Page loaded:
 
