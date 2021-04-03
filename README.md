@@ -14,23 +14,9 @@ After this lesson you should be able to:
 - create a simple widget
 - importing assets and packages into pubspec.yaml
 
-Widgets used:
-- Container
-- Text
-- Image
-- BottomNavigationBar
-- TextField
-- Icon
-- Stack
-- Column
-- Row
-- GestureDetector
-- SafeArea
-- PageView
-- InkWell
+Widgets used: Container, Text, Image, BottomNavigationBar, TextField, Icon, Stack, Column, Row, GestureDetector, SafeArea, PageView, InkWell
 
-Package:
-- svg_helper
+Package: svg_helper
 
 **Final result:**
 
