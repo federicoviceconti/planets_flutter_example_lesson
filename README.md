@@ -1,6 +1,6 @@
 # planets_flutter_example_lesson
 
-Example made during Flutter lesson. You can find all the instruction (marked as //TODO) on the subbranches: lesson/num_lesson.
+Example made during Flutter lesson. You can find all the instructions (marked as //TODO) on the branches: lesson/num_lesson.
 The final code is contained into the branch master.
 
 ## About this project
